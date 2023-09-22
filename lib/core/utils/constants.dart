@@ -1,2 +1,3 @@
-//TODO(define constants like this)
-// const kDefaultAvatar = 'https://images.freeimages.com/fic/images/icons/573/must_have/256/user.png';
+const kBaseUrl = 'api.openweathermap.org/data/2.5';
+const kWeatherEndpoint = '/weather';
+const kApiKey = '429a47878356dcb48b0041b7cedfe6fa';
