@@ -6,7 +6,7 @@ class ServerException extends Equatable implements Exception {
     required this.statusCode,
   }) : super();
   final String message;
-  final String statusCode;
+  final int statusCode;
 
   @override
   List<Object?> get props => [message, statusCode];

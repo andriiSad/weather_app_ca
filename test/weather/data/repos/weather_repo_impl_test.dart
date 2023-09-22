@@ -28,7 +28,7 @@ void main() {
 
     const tException = ServerException(
       message: 'Unknown error occurred',
-      statusCode: '500',
+      statusCode: 500,
     );
     test(
       'should call the [RemoteDataSource.getListWeather] and return '
@@ -102,7 +102,7 @@ void main() {
 
     const tException = ServerException(
       message: 'Unknown error occurred',
-      statusCode: '500',
+      statusCode: 500,
     );
     test(
       'should call the [RemoteDataSource.getWeatherByCityId] and return '
@@ -176,7 +176,7 @@ void main() {
 
     const tException = ServerException(
       message: 'Unknown error occurred',
-      statusCode: '500',
+      statusCode: 500,
     );
 
     setUp(() {
