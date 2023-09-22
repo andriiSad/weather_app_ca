@@ -26,15 +26,4 @@ class CityModel extends City {
       ),
     );
   }
-
-  // CityModel.fromMap(DataMap map)
-  //     : super(
-  //         id: map['id'] as int,
-  //         name: map['name'] as String,
-  //         countryCode: (map['sys'] as DataMap)['country'] as String,
-  //         coord: Coordinates(
-  //           lat: (map['coord'] as DataMap)['lat'] as double,
-  //           lon: (map['coord'] as DataMap)['lon'] as double,
-  //         ),
-  //       );
 }
