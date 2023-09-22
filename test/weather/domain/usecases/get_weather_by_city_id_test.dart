@@ -12,7 +12,7 @@ void main() {
   late IWeatherRepo repository;
   late GetWeatherByCityId usecase;
 
-  final tWeather = Weather.empty();
+  const tWeather = Weather.empty();
   const tFailure = ServerFailure(
     message: 'No data found for this params',
     statusCode: 500,
@@ -34,13 +34,13 @@ void main() {
           () => repository.getWeatherByCityId(
             cityId: any(named: 'cityId'),
           ),
-        ).thenAnswer((_) async => Right(tWeather));
+        ).thenAnswer((_) async => const Right(tWeather));
 
         // act
         final result = await usecase(params);
 
         // assert
-        expect(result, Right<dynamic, Weather>(tWeather));
+        expect(result, const Right<dynamic, Weather>(tWeather));
 
         verify(
           () => repository.getWeatherByCityId(
