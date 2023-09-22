@@ -1,29 +1,30 @@
 import 'package:equatable/equatable.dart';
-import 'package:intl/intl.dart';
 
 class Weather extends Equatable {
-  Weather({
+  const Weather({
     required this.cityId,
     required this.temp,
     required this.tempMin,
     required this.tempMax,
     required this.mainWeatherId,
-  }) : date = DateFormat('d MMMM y').format(DateTime.now());
+    required this.date,
+  });
 
-  Weather.empty()
+  const Weather.empty()
       : this(
           cityId: 0,
           temp: 0,
           tempMin: 0,
           tempMax: 0,
           mainWeatherId: 0,
+          date: '',
         );
 
   final int cityId;
 
-  final int temp;
-  final int tempMin;
-  final int tempMax;
+  final double temp;
+  final double tempMin;
+  final double tempMax;
 
   final int mainWeatherId;
 
@@ -36,6 +37,7 @@ class Weather extends Equatable {
         tempMin,
         tempMax,
         mainWeatherId,
+        date,
       ];
 
   @override
