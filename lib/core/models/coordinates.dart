@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 
-//TODO(think about relocating model to core)
 class Coordinates extends Equatable {
   const Coordinates({
     required this.lat,
