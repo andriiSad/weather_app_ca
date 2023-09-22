@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:weather_app_ca/weather/domain/entities/coordinates.dart';
+import 'package:weather_app_ca/core/models/coordinates.dart';
 
 class City extends Equatable {
   const City({

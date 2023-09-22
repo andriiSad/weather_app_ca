@@ -1,6 +1,6 @@
+import 'package:weather_app_ca/core/models/coordinates.dart';
 import 'package:weather_app_ca/core/usecases/usecases.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
-import 'package:weather_app_ca/weather/domain/entities/coordinates.dart';
 import 'package:weather_app_ca/weather/domain/entities/weather.dart';
 import 'package:weather_app_ca/weather/domain/repos/weather_repo.dart';
 
