@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
 import 'package:weather_app_ca/weather/data/models/city_model.dart';
-import 'package:weather_app_ca/weather/data/models/main_weather_model.dart';
-import 'package:weather_app_ca/weather/domain/entities/main_weather.dart';
+import 'package:weather_app_ca/weather/domain/entities/city.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 
@@ -13,25 +12,22 @@ void main() {
 
   final tJson = fixture('weather.json');
 
-  //TODO(refactor this cast)
-  final tMap = (jsonDecode(tJson) as DataMap)['list'][0]['weather'] as DataMap;
+  final tMap = json.decode(tJson) as DataMap;
 
-  // final tMap = (jsonDecode(tJson) as DataMap)['list'][0] as DataMap;
-
-  test('should be a subclass of MainWeather', () {
-    expect(tModel, isA<MainWeather>());
+  test('should be a subclass of City', () {
+    expect(tModel, isA<City>());
   });
 
   group('fromMap', () {
     test(
-      'should return a [MainWeatherModel] with the right data',
+      'should return a [CityModel] with the right data',
       () {
         // act
-        final result = MainWeatherModel.fromMap(tMap);
+        final result = CityModel.fromMap(tMap);
 
         // assert
-        //check [MainWeatherModel] not [MainWeather] entity
-        expect(result, isA<MainWeatherModel>());
+        //check [CityModel] not [City] entity
+        expect(result, isA<CityModel>());
         expect(result, tModel);
       },
     );
@@ -39,12 +35,13 @@ void main() {
       'should throw an [Error] when the map is invalid',
       () {
         //arrange
-        final map = DataMap.from(tMap)..remove('id');
+        final brokenMap = DataMap.from(tMap)..remove('sys');
+
         // act
-        const methodCall = MainWeatherModel.fromMap;
+        const methodCall = CityModel.fromMap;
 
         // assert
-        expect(() => methodCall(map), throwsA(isA<Error>()));
+        expect(() => methodCall(brokenMap), throwsA(isA<Error>()));
       },
     );
   });

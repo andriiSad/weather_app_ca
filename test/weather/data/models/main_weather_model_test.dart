@@ -12,10 +12,7 @@ void main() {
 
   final tJson = fixture('weather.json');
 
-  //TODO(refactor this cast)
-  final tMap = (jsonDecode(tJson) as DataMap)['list'][0]['weather'] as DataMap;
-
-  // final tMap = (jsonDecode(tJson) as DataMap)['list'][0] as DataMap;
+  final tMap = json.decode(tJson) as DataMap;
 
   test('should be a subclass of MainWeather', () {
     expect(tModel, isA<MainWeather>());
@@ -38,12 +35,13 @@ void main() {
       'should throw an [Error] when the map is invalid',
       () {
         //arrange
-        final map = DataMap.from(tMap)..remove('id');
+        final brokenMap = DataMap.from(tMap)..remove('weather');
+
         // act
         const methodCall = MainWeatherModel.fromMap;
 
         // assert
-        expect(() => methodCall(map), throwsA(isA<Error>()));
+        expect(() => methodCall(brokenMap), throwsA(isA<Error>()));
       },
     );
   });

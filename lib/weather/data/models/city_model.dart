@@ -12,7 +12,7 @@ class CityModel extends City {
 
   const CityModel.empty() : super.empty();
 
-  factory CityModel.fromJson(DataMap json) {
+  factory CityModel.fromMap(DataMap json) {
     final dataMap = json['sys'] as DataMap;
     final coordMap = json['coord'] as DataMap;
 

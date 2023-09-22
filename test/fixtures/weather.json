@@ -1,14 +1,9 @@
-{
-    "message": "accurate",
-    "cod": "200",
-    "count": 1,
-    "list": [
       {
         "id": 0,
         "name": "_empty.name_",
         "coord": {
-          "lat": 0,
-          "lon": 0
+          "lat": 0.0,
+          "lon": 0.0
         },
         "main": {
           "temp": 0.0,
@@ -40,5 +35,3 @@
           }
         ]
       }
-    ]
-  }

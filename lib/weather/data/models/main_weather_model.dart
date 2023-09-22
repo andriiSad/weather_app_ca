@@ -11,11 +11,14 @@ class MainWeatherModel extends MainWeather {
 
   const MainWeatherModel.empty() : super.empty();
 
-  MainWeatherModel.fromMap(DataMap map)
-      : super(
-          id: map['id'] as int,
-          main: map['main'] as String,
-          description: map['description'] as String,
-          iconCode: map['icon'] as String,
-        );
+  factory MainWeatherModel.fromMap(DataMap json) {
+    final weather = (json['weather'] as List<dynamic>)[0] as DataMap;
+
+    return MainWeatherModel(
+      id: weather['id'] as int,
+      main: weather['main'] as String,
+      description: weather['description'] as String,
+      iconCode: weather['icon'] as String,
+    );
+  }
 }
