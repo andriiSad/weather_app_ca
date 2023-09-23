@@ -1,7 +1,7 @@
 import 'package:weather_app_ca/core/usecases/usecases.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
-import 'package:weather_app_ca/weather/domain/entities/weather.dart';
-import 'package:weather_app_ca/weather/domain/repos/weather_repo.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/weather.dart';
+import 'package:weather_app_ca/src/weather/domain/repos/weather_repo.dart';
 
 class GetListWeather
     extends UsecaseWithParams<List<Weather>, GetListWeatherParams> {

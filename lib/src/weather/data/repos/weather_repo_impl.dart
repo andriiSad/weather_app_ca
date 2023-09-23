@@ -3,9 +3,9 @@ import 'package:weather_app_ca/core/errors/exceptions.dart';
 import 'package:weather_app_ca/core/errors/failures.dart';
 import 'package:weather_app_ca/core/models/coordinates.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
-import 'package:weather_app_ca/weather/data/datasources/weather_remote_data_source.dart';
-import 'package:weather_app_ca/weather/domain/entities/weather.dart';
-import 'package:weather_app_ca/weather/domain/repos/weather_repo.dart';
+import 'package:weather_app_ca/src/weather/data/datasources/weather_remote_data_source.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/weather.dart';
+import 'package:weather_app_ca/src/weather/domain/repos/weather_repo.dart';
 
 class WeatherRepoImpl implements IWeatherRepo {
   WeatherRepoImpl(this._remoteDataSource);

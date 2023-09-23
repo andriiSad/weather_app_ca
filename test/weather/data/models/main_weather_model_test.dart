@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
-import 'package:weather_app_ca/weather/data/models/main_weather_model.dart';
-import 'package:weather_app_ca/weather/domain/entities/main_weather.dart';
+import 'package:weather_app_ca/src/weather/data/models/main_weather_model.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/main_weather.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 

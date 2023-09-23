@@ -1,5 +1,5 @@
 import 'package:weather_app_ca/core/utils/typedefs.dart';
-import 'package:weather_app_ca/weather/domain/entities/main_weather.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/main_weather.dart';
 
 class MainWeatherModel extends MainWeather {
   const MainWeatherModel({

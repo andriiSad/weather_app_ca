@@ -1,6 +1,6 @@
 import 'package:weather_app_ca/core/models/coordinates.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
-import 'package:weather_app_ca/weather/domain/entities/city.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/city.dart';
 
 class CityModel extends City {
   const CityModel({

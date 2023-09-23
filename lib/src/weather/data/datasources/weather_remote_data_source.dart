@@ -5,7 +5,7 @@ import 'package:weather_app_ca/core/errors/exceptions.dart';
 import 'package:weather_app_ca/core/models/coordinates.dart';
 import 'package:weather_app_ca/core/utils/constants.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
-import 'package:weather_app_ca/weather/data/models/weather_model.dart';
+import 'package:weather_app_ca/src/weather/data/models/weather_model.dart';
 
 abstract class IWeatherRemoteDataSource {
   Future<List<WeatherModel>> getListWeather({

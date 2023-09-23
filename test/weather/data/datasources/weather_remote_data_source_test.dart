@@ -4,11 +4,11 @@ import 'package:intl/intl.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:weather_app_ca/core/errors/exceptions.dart';
 import 'package:weather_app_ca/core/utils/constants.dart';
-import 'package:weather_app_ca/weather/data/datasources/weather_remote_data_source.dart';
-import 'package:weather_app_ca/weather/data/models/weather_model.dart';
-import 'package:weather_app_ca/weather/domain/usecases/get_list_weather.dart';
-import 'package:weather_app_ca/weather/domain/usecases/get_weather_by_city_id.dart';
-import 'package:weather_app_ca/weather/domain/usecases/get_weather_by_coordinates.dart';
+import 'package:weather_app_ca/src/weather/data/datasources/weather_remote_data_source.dart';
+import 'package:weather_app_ca/src/weather/data/models/weather_model.dart';
+import 'package:weather_app_ca/src/weather/domain/usecases/get_list_weather.dart';
+import 'package:weather_app_ca/src/weather/domain/usecases/get_weather_by_city_id.dart';
+import 'package:weather_app_ca/src/weather/domain/usecases/get_weather_by_coordinates.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 

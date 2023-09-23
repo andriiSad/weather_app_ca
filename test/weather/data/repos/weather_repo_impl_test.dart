@@ -3,12 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:weather_app_ca/core/errors/exceptions.dart';
 import 'package:weather_app_ca/core/errors/failures.dart';
-import 'package:weather_app_ca/weather/data/datasources/weather_remote_data_source.dart';
-import 'package:weather_app_ca/weather/data/models/weather_model.dart';
-import 'package:weather_app_ca/weather/data/repos/weather_repo_impl.dart';
-import 'package:weather_app_ca/weather/domain/usecases/get_list_weather.dart';
-import 'package:weather_app_ca/weather/domain/usecases/get_weather_by_city_id.dart';
-import 'package:weather_app_ca/weather/domain/usecases/get_weather_by_coordinates.dart';
+import 'package:weather_app_ca/src/weather/data/datasources/weather_remote_data_source.dart';
+import 'package:weather_app_ca/src/weather/data/models/weather_model.dart';
+import 'package:weather_app_ca/src/weather/data/repos/weather_repo_impl.dart';
+import 'package:weather_app_ca/src/weather/domain/usecases/get_list_weather.dart';
+import 'package:weather_app_ca/src/weather/domain/usecases/get_weather_by_city_id.dart';
+import 'package:weather_app_ca/src/weather/domain/usecases/get_weather_by_coordinates.dart';
 
 import 'weather_remote_data_source_mock.dart';
 

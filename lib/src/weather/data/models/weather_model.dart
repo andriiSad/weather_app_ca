@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
-import 'package:weather_app_ca/weather/domain/entities/weather.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/weather.dart';
 
 class WeatherModel extends Weather {
   //TODO:(think about date initialization)

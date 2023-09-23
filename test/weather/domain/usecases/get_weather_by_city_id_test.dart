@@ -2,9 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:weather_app_ca/core/errors/failures.dart';
-import 'package:weather_app_ca/weather/domain/entities/weather.dart';
-import 'package:weather_app_ca/weather/domain/repos/weather_repo.dart';
-import 'package:weather_app_ca/weather/domain/usecases/get_weather_by_city_id.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/weather.dart';
+import 'package:weather_app_ca/src/weather/domain/repos/weather_repo.dart';
+import 'package:weather_app_ca/src/weather/domain/usecases/get_weather_by_city_id.dart';
 
 import 'weather_repo_mock.dart';
 
