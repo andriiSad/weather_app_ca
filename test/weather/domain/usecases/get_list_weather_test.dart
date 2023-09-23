@@ -12,7 +12,7 @@ void main() {
   late IWeatherRepo repository;
   late GetListWeather usecase;
 
-  final tWeatherList = [Weather.empty()];
+  final tWeatherList = [const Weather.empty()];
   const tFailure = ServerFailure(
     message: 'No data found for this params',
     statusCode: 500,
