@@ -5,16 +5,12 @@ abstract class Failure extends Equatable {
   const Failure({
     required this.message,
     required this.statusCode,
-  }) : assert(
-          statusCode is String || statusCode is int,
-          'statusCode must be a String or int, not: $statusCode',
-        );
+  });
 
   final String message;
-  final dynamic statusCode;
+  final int statusCode;
 
-  String get errorMessage => '$statusCode '
-      '${statusCode is String ? '' : ' Error'}: $message';
+  String get errorMessage => '$statusCode Error: $message';
 
   @override
   List<Object?> get props => [message, statusCode];
