@@ -13,7 +13,7 @@ void main() {
     date: DateFormat('d MMMM y').format(DateTime.now()),
   );
 
-  final tJson = fixture('weather.json');
+  final tJson = fixture('weather_list.json');
 
   final tMap = ((json.decode(tJson) as DataMap)['list'] as List)[0] as DataMap;
   test('should be a subclass of Weather', () {

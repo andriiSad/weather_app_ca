@@ -10,7 +10,7 @@ import '../../../fixtures/fixture_reader.dart';
 void main() {
   const tModel = CityModel.empty();
 
-  final tJson = fixture('weather.json');
+  final tJson = fixture('weather_list.json');
 
   final tMap = ((json.decode(tJson) as DataMap)['list'] as List)[0] as DataMap;
 
