@@ -76,7 +76,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
           kBaseUrl,
           kWeatherEndpoint,
           {
-            'id': cityId,
+            'id': cityId.toString(),
             'appid': kApiKey,
           },
         ),
@@ -108,8 +108,8 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
           kBaseUrl,
           kWeatherEndpoint,
           {
-            'lat': coord.lat,
-            'lon': coord.lon,
+            'lat': coord.lat.toString(),
+            'lon': coord.lon.toString(),
             'appid': kApiKey,
           },
         ),

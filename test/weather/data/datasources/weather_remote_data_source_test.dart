@@ -7,6 +7,8 @@ import 'package:weather_app_ca/core/utils/constants.dart';
 import 'package:weather_app_ca/weather/data/datasources/weather_remote_data_source.dart';
 import 'package:weather_app_ca/weather/data/models/weather_model.dart';
 import 'package:weather_app_ca/weather/domain/usecases/get_list_weather.dart';
+import 'package:weather_app_ca/weather/domain/usecases/get_weather_by_city_id.dart';
+import 'package:weather_app_ca/weather/domain/usecases/get_weather_by_coordinates.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 
@@ -22,7 +24,7 @@ void main() {
   });
 
   group('getListWeather', () {
-    final tJson = fixture('weather.json');
+    final tJson = fixture('weather_list.json');
 
     const params = GetListWeatherParams.empty();
 
@@ -112,8 +114,7 @@ void main() {
         verifyNoMoreInteractions(client);
       },
     );
-    test(
-        "should throw [ServerException] when the response.body['list'] is empty",
+    test("should throw [ServerException] when the response.body['list'] empty",
         () async {
       // Arrange
       const tEmptyJson = '{"list": []}';
@@ -148,5 +149,190 @@ void main() {
 
       verifyNoMoreInteractions(client);
     });
+  });
+  group('getWeatherByCityId', () {
+    final tJson = fixture('single_weather.json');
+
+    const params = GetWeatherByCityIdParams.empty();
+
+    setUp(() {
+      registerFallbackValue(
+        Uri.https(kBaseUrl, kWeatherEndpoint, {
+          'id': params.cityId.toString(),
+          'appid': kApiKey,
+        }),
+      );
+    });
+
+    test(
+      'should call the [RemoteDataSource.getWeatherByCityId] '
+      'and return [WeatherModel] when the status code is 200',
+      () async {
+        final tModel = const WeatherModel.empty().copyWith(
+          date: DateFormat('d MMMM y').format(DateTime.now()),
+        );
+
+        // arrange
+        when(() => client.get(any())).thenAnswer(
+          (_) async => http.Response(tJson, 200),
+        );
+
+        // act
+        final result = await remoteDataSource.getWeatherByCityId(
+          cityId: params.cityId,
+        );
+
+        // assert
+        expect(result, tModel);
+
+        verify(
+          () => client.get(
+            Uri.https(kBaseUrl, kWeatherEndpoint, {
+              'id': params.cityId.toString(),
+              'appid': kApiKey,
+            }),
+          ),
+        ).called(1);
+
+        verifyNoMoreInteractions(client);
+      },
+    );
+
+    test(
+      'should throw [ServerException] when the status code is not 200',
+      () async {
+        const tMessage = 'Server down, Server down, Server down';
+        const tStatusCode = 500;
+
+        // arrange
+        when(() => client.get(any())).thenAnswer(
+          (_) async => http.Response(
+            tMessage,
+            tStatusCode,
+          ),
+        );
+
+        // act
+        final methodCall = remoteDataSource.getWeatherByCityId;
+
+        // assert
+        expect(
+          methodCall(
+            cityId: params.cityId,
+          ),
+          throwsA(
+            const ServerException(
+              message: tMessage,
+              statusCode: tStatusCode,
+            ),
+          ),
+        );
+
+        verify(
+          () => client.get(
+            Uri.https(kBaseUrl, kWeatherEndpoint, {
+              'id': params.cityId.toString(),
+              'appid': kApiKey,
+            }),
+          ),
+        ).called(1);
+
+        verifyNoMoreInteractions(client);
+      },
+    );
+  });
+  group('getWeatherByCoordinates', () {
+    final tJson = fixture('single_weather.json');
+
+    const params = GetWeatherByCoordinatesParams.empty();
+
+    setUp(() {
+      registerFallbackValue(
+        Uri.https(kBaseUrl, kWeatherEndpoint, {
+          'lat': params.coord.lat.toString(),
+          'lon': params.coord.lon.toString(),
+          'appid': kApiKey,
+        }),
+      );
+    });
+
+    test(
+      'should call the [RemoteDataSource.getWeatherByCoordinates] '
+      'and return [WeatherModel] when the status code is 200',
+      () async {
+        final tModel = const WeatherModel.empty().copyWith(
+          date: DateFormat('d MMMM y').format(DateTime.now()),
+        );
+
+        // arrange
+        when(() => client.get(any())).thenAnswer(
+          (_) async => http.Response(tJson, 200),
+        );
+
+        // act
+        final result = await remoteDataSource.getWeatherByCoordinates(
+          coord: params.coord,
+        );
+
+        // assert
+        expect(result, tModel);
+
+        verify(
+          () => client.get(
+            Uri.https(kBaseUrl, kWeatherEndpoint, {
+              'lat': params.coord.lat.toString(),
+              'lon': params.coord.lon.toString(),
+              'appid': kApiKey,
+            }),
+          ),
+        ).called(1);
+
+        verifyNoMoreInteractions(client);
+      },
+    );
+
+    test(
+      'should throw [ServerException] when the status code is not 200',
+      () async {
+        const tMessage = 'Server down, Server down, Server down';
+        const tStatusCode = 500;
+
+        // arrange
+        when(() => client.get(any())).thenAnswer(
+          (_) async => http.Response(
+            tMessage,
+            tStatusCode,
+          ),
+        );
+
+        // act
+        final methodCall = remoteDataSource.getWeatherByCoordinates;
+
+        // assert
+        expect(
+          methodCall(
+            coord: params.coord,
+          ),
+          throwsA(
+            const ServerException(
+              message: tMessage,
+              statusCode: tStatusCode,
+            ),
+          ),
+        );
+
+        verify(
+          () => client.get(
+            Uri.https(kBaseUrl, kWeatherEndpoint, {
+              'lat': params.coord.lat.toString(),
+              'lon': params.coord.lon.toString(),
+              'appid': kApiKey,
+            }),
+          ),
+        ).called(1);
+
+        verifyNoMoreInteractions(client);
+      },
+    );
   });
 }
