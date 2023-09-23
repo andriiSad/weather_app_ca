@@ -12,7 +12,7 @@ void main() {
 
   final tJson = fixture('weather.json');
 
-  final tMap = json.decode(tJson) as DataMap;
+  final tMap = ((json.decode(tJson) as DataMap)['list'] as List)[0] as DataMap;
 
   test('should be a subclass of MainWeather', () {
     expect(tModel, isA<MainWeather>());
