@@ -33,7 +33,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
       final response = await _client.get(
         Uri.https(
           kBaseUrl,
-          kWeatherEndpoint,
+          kCitiesEndpoint,
           {
             'q': cityName,
             'appid': kApiKey,
@@ -46,8 +46,15 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
           statusCode: response.statusCode,
         );
       }
+      final dataList = (jsonDecode(response.body) as DataMap)['list'] as List;
+      if (dataList.isEmpty) {
+        throw ServerException(
+          message: 'Empty response list',
+          statusCode: response.statusCode,
+        );
+      }
       return List<DataMap>.from(
-        (jsonDecode(response.body) as DataMap)['list'] as List,
+        dataList,
       ).map(WeatherModel.fromMap).toList();
     } on ServerException {
       rethrow;
