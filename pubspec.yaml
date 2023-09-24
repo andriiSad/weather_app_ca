@@ -37,6 +37,7 @@ dependencies:
 
   # HTTP requests
   http: ^1.1.0
+  geolocator: ^10.1.0
 
 dev_dependencies:
   # Flutter testing
