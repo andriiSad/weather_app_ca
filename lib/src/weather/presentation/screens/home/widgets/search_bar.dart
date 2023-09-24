@@ -138,6 +138,7 @@ class _SearchBarDropDown extends StatelessWidget {
                       context.read<WeatherBloc>().add(
                             SelectedCityEvent(cityId: city.id),
                           );
+                      FocusManager.instance.primaryFocus?.unfocus();
 
                       inputController.clear();
                     },

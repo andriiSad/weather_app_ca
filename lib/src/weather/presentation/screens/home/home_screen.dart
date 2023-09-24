@@ -46,25 +46,30 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Gap(context.screenHeight * 0.1),
-                Stack(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(top: context.screenHeight * 0.2),
-                      child: const WeatherCard(),
-                    ),
-                    const Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: widgets.SearchBar(),
-                    ),
-                  ],
-                ),
-                Gap(context.screenHeight * 0.2),
-              ],
+            //TODO(fix scroll)
+            child: SingleChildScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              child: Column(
+                children: [
+                  Gap(context.screenHeight * 0.1),
+                  Stack(
+                    children: [
+                      Padding(
+                        padding:
+                            EdgeInsets.only(top: context.screenHeight * 0.2),
+                        child: const WeatherCard(),
+                      ),
+                      const Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: widgets.SearchBar(),
+                      ),
+                    ],
+                  ),
+                  Gap(context.screenHeight * 0.2),
+                ],
+              ),
             ),
           ),
         ),
