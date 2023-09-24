@@ -23,7 +23,7 @@ class City extends Equatable {
   final Coordinates coord;
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [id, name, countryCode, coord];
 
   @override
   String toString() =>

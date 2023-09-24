@@ -21,8 +21,6 @@ class MainWeather extends Equatable {
   final String description;
   final String iconCode;
 
-  //TODO(check that if id is unique for whole MainWeather)
-  //override props to use id only
   @override
   List<Object> get props => [id, main, description, iconCode];
 

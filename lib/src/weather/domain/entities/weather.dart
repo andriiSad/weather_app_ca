@@ -1,47 +1,48 @@
 import 'package:equatable/equatable.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/city.dart';
+import 'package:weather_app_ca/src/weather/domain/entities/main_weather.dart';
 
 class Weather extends Equatable {
   const Weather({
-    required this.cityId,
+    required this.city,
     required this.temp,
     required this.tempMin,
     required this.tempMax,
-    required this.mainWeatherId,
+    required this.mainWeather,
     required this.date,
   });
 
   const Weather.empty()
       : this(
-          cityId: 0,
+          city: const City.empty(),
           temp: 0,
           tempMin: 0,
           tempMax: 0,
-          mainWeatherId: 0,
+          mainWeather: const MainWeather.empty(),
           date: '',
         );
 
-  final int cityId;
+  final City city;
 
   final double temp;
   final double tempMin;
   final double tempMax;
 
-  final int mainWeatherId;
+  final MainWeather mainWeather;
 
   final String date;
 
   @override
   List<Object> get props => [
-        cityId,
+        city,
         temp,
         tempMin,
         tempMax,
-        mainWeatherId,
+        mainWeather,
         date,
       ];
 
   @override
-  String toString() =>
-      'Weather(cityId: $cityId, temp: $temp, tempMin: $tempMin, '
-      'tempMax: $tempMax, mainWeatherId: $mainWeatherId, date: $date)';
+  String toString() => 'Weather(city: $city, temp: $temp, tempMin: $tempMin, '
+      'tempMax: $tempMax, mainWeather: $mainWeather, date: $date)';
 }
