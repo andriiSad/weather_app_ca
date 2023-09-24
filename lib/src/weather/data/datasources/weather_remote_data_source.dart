@@ -49,7 +49,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
       final dataList = (jsonDecode(response.body) as DataMap)['list'] as List;
       if (dataList.isEmpty) {
         throw ServerException(
-          message: 'Empty response list',
+          message: 'No data found',
           statusCode: response.statusCode,
         );
       }
