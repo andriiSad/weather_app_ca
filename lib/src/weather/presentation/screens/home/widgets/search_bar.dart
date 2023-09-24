@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconly/iconly.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
 import 'package:weather_app_ca/src/weather/domain/entities/city.dart';
 import 'package:weather_app_ca/src/weather/presentation/bloc/weather_bloc.dart';
@@ -40,6 +42,8 @@ class _SearchBarState extends State<SearchBar> {
                     Expanded(
                       child: TextFormField(
                         controller: inputController,
+                        maxLength: 20,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: Colors.white,
@@ -49,21 +53,39 @@ class _SearchBarState extends State<SearchBar> {
                           ),
                           border: InputBorder.none,
                           focusedBorder: InputBorder.none,
+                          counterText: '', // Remove the default counter text
                         ),
                       ),
                     ),
-                    FloatingActionButton(
-                      onPressed: () {
-                        context.read<WeatherBloc>().add(
-                              SelectingCityEvent(
-                                cityName: inputController.text.trim(),
-                              ),
-                            );
-                      },
-                      shape: const CircleBorder(),
-                      child: const Icon(
-                        Icons.search,
-                      ),
+                    Row(
+                      children: [
+                        FloatingActionButton(
+                          onPressed: () {
+                            context.read<WeatherBloc>().add(
+                                  SelectingCityEvent(
+                                    cityName: inputController.text.trim(),
+                                  ),
+                                );
+                          },
+                          shape: const CircleBorder(),
+                          child: const Icon(
+                            IconlyLight.search,
+                          ),
+                        ),
+                        FloatingActionButton(
+                          onPressed: () {
+                            context.read<WeatherBloc>().add(
+                                  SelectingCityEvent(
+                                    cityName: inputController.text.trim(),
+                                  ),
+                                );
+                          },
+                          shape: const CircleBorder(),
+                          child: const Icon(
+                            Icons.map_outlined,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
