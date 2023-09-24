@@ -38,9 +38,11 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       ),
     );
     result.fold(
-      (failure) => CitySelectingErrorState(
-        statusCode: failure.statusCode,
-        message: failure.message,
+      (failure) => emit(
+        CitySelectingErrorState(
+          statusCode: failure.statusCode,
+          message: failure.message,
+        ),
       ),
       (weatherList) => emit(
         CitySelectingState(
@@ -59,7 +61,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     emit(const WeatherLoadingState());
 
     final result = weatherList.firstWhere(
-      (weather) => weather.cityId == event.cityId,
+      (weather) => weather.city.id == event.cityId,
     );
 
     emit(

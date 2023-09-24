@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
-import 'package:weather_app_ca/core/models/coordinates.dart';
 import 'package:weather_app_ca/src/weather/presentation/bloc/weather_bloc.dart';
 
 class WeatherCard extends StatefulWidget {
@@ -16,21 +15,8 @@ class WeatherCard extends StatefulWidget {
 
 class _WeatherCardState extends State<WeatherCard> {
   @override
-  void initState() {
-    context.read<WeatherBloc>().add(
-          const SelectedCityByCoordinatesEvent(
-            coord: Coordinates(
-              lat: 50.06143,
-              lon: 19.93658,
-            ),
-          ),
-        );
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final cardHeight = context.screenHeight * 0.4;
+    final cardHeight = context.screenHeight * 0.35;
     return SizedBox(
       height: cardHeight,
       child: Card(
@@ -41,6 +27,9 @@ class _WeatherCardState extends State<WeatherCard> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: BlocBuilder<WeatherBloc, WeatherState>(
+            buildWhen: (previous, current) =>
+                current is! CitySelectingState &&
+                current is! CitySelectingErrorState,
             builder: (context, state) {
               if (state is WeatherLoadingState) {
                 return const Center(
@@ -54,22 +43,36 @@ class _WeatherCardState extends State<WeatherCard> {
                 return Column(
                   children: [
                     SizedBox(
-                      height: cardHeight * 0.3,
-                      child: const Row(
+                      height: cardHeight * 0.35,
+                      child: Row(
                         children: [
-                          _WeatherIcon(
+                          const _WeatherIcon(
                             imageUrl:
                                 'https://openweathermap.org/img/wn/02d.png',
                           ),
-                          Gap(15),
+                          const Gap(15),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('One'),
-                                Text('Two'),
-                                Text('Three'),
+                                Text(
+                                  state.weather.temp < 0
+                                      ? '${state.weather.temp.round()}\u2103'
+                                      : '+${state.weather.temp.round()}\u2103',
+                                  style: context.textTheme.bodyLarge!.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  state.weather.mainWeather.main,
+                                  style: context.textTheme.bodyMedium,
+                                ),
+                                Text(
+                                  state.weather.mainWeather.description,
+                                  style: context.textTheme.bodyMedium!
+                                      .copyWith(color: Colors.grey),
+                                ),
                               ],
                             ),
                           ),
@@ -77,14 +80,24 @@ class _WeatherCardState extends State<WeatherCard> {
                       ),
                     ),
                     Gap(cardHeight * 0.1),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Three'),
-                        Text('Four'),
+                        Text(
+                          '${state.weather.city.name}, '
+                          '${state.weather.city.countryCode}',
+                          style: context.textTheme.bodyLarge!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          state.weather.date,
+                          style: context.textTheme.bodyMedium!
+                              .copyWith(color: Colors.grey),
+                        ),
                       ],
                     ),
-                    Gap(cardHeight * 0.1),
+                    Gap(cardHeight * 0.05),
                     const Divider(
                       thickness: 0.5,
                       color: Colors.blue,
@@ -97,8 +110,19 @@ class _WeatherCardState extends State<WeatherCard> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Text('One'),
-                              Text(state.weather.tempMin.toString()),
+                              Text(
+                                'Min',
+                                style: context.textTheme.bodyMedium!
+                                    .copyWith(color: Colors.grey),
+                              ),
+                              Text(
+                                state.weather.tempMin < 0
+                                    ? '${state.weather.tempMin.round()}\u2103'
+                                    : '+${state.weather.tempMin.round()}\u2103',
+                                style: context.textTheme.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                           const VerticalDivider(
@@ -108,8 +132,19 @@ class _WeatherCardState extends State<WeatherCard> {
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              const Text('One'),
-                              Text(state.weather.tempMax.toString()),
+                              Text(
+                                'Max',
+                                style: context.textTheme.bodyMedium!
+                                    .copyWith(color: Colors.grey),
+                              ),
+                              Text(
+                                state.weather.tempMax < 0
+                                    ? '${state.weather.tempMax.round()}\u2103'
+                                    : '+${state.weather.tempMax.round()}\u2103',
+                                style: context.textTheme.bodyLarge!.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ],
                           ),
                         ],
@@ -128,6 +163,7 @@ class _WeatherCardState extends State<WeatherCard> {
   }
 }
 
+//TODO(add placeholder to icon)
 class _WeatherIcon extends StatelessWidget {
   const _WeatherIcon({
     required this.imageUrl,
@@ -142,7 +178,7 @@ class _WeatherIcon extends StatelessWidget {
       ),
       child: Image.network(
         imageUrl,
-        scale: 0.5,
+        scale: 0.1,
       ),
     );
   }
