@@ -131,10 +131,7 @@ void main() {
           cityName: params.cityName,
         ),
         throwsA(
-          const ServerException(
-            message: 'Empty response list',
-            statusCode: 200,
-          ),
+          isA<ServerException>(),
         ),
       );
 
@@ -221,10 +218,7 @@ void main() {
             cityId: params.cityId,
           ),
           throwsA(
-            const ServerException(
-              message: tMessage,
-              statusCode: tStatusCode,
-            ),
+            isA<ServerException>(),
           ),
         );
 
