@@ -32,6 +32,7 @@ void main() {
       registerFallbackValue(
         Uri.https(kBaseUrl, kCitiesEndpoint, {
           'q': params.cityName,
+          'units': 'metric',
           'appid': kApiKey,
         }),
       );
@@ -64,6 +65,7 @@ void main() {
           () => client.get(
             Uri.https(kBaseUrl, kCitiesEndpoint, {
               'q': params.cityName,
+              'units': 'metric',
               'appid': kApiKey,
             }),
           ),
@@ -106,6 +108,7 @@ void main() {
           () => client.get(
             Uri.https(kBaseUrl, kCitiesEndpoint, {
               'q': params.cityName,
+              'units': 'metric',
               'appid': kApiKey,
             }),
           ),
@@ -139,6 +142,7 @@ void main() {
         () => client.get(
           Uri.https(kBaseUrl, kCitiesEndpoint, {
             'q': params.cityName,
+            'units': 'metric',
             'appid': kApiKey,
           }),
         ),
@@ -156,6 +160,7 @@ void main() {
       registerFallbackValue(
         Uri.https(kBaseUrl, kWeatherEndpoint, {
           'id': params.cityId.toString(),
+          'units': 'metric',
           'appid': kApiKey,
         }),
       );
@@ -186,6 +191,7 @@ void main() {
           () => client.get(
             Uri.https(kBaseUrl, kWeatherEndpoint, {
               'id': params.cityId.toString(),
+              'units': 'metric',
               'appid': kApiKey,
             }),
           ),
@@ -226,6 +232,7 @@ void main() {
           () => client.get(
             Uri.https(kBaseUrl, kWeatherEndpoint, {
               'id': params.cityId.toString(),
+              'units': 'metric',
               'appid': kApiKey,
             }),
           ),
@@ -245,6 +252,7 @@ void main() {
         Uri.https(kBaseUrl, kWeatherEndpoint, {
           'lat': params.coord.lat.toString(),
           'lon': params.coord.lon.toString(),
+          'units': 'metric',
           'appid': kApiKey,
         }),
       );
@@ -276,6 +284,7 @@ void main() {
             Uri.https(kBaseUrl, kWeatherEndpoint, {
               'lat': params.coord.lat.toString(),
               'lon': params.coord.lon.toString(),
+              'units': 'metric',
               'appid': kApiKey,
             }),
           ),
@@ -320,6 +329,7 @@ void main() {
             Uri.https(kBaseUrl, kWeatherEndpoint, {
               'lat': params.coord.lat.toString(),
               'lon': params.coord.lon.toString(),
+              'units': 'metric',
               'appid': kApiKey,
             }),
           ),
