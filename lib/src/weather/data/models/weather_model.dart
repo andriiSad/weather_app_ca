@@ -1,15 +1,16 @@
 import 'package:intl/intl.dart';
 import 'package:weather_app_ca/core/utils/typedefs.dart';
+import 'package:weather_app_ca/src/weather/data/models/city_model.dart';
+import 'package:weather_app_ca/src/weather/data/models/main_weather_model.dart';
 import 'package:weather_app_ca/src/weather/domain/entities/weather.dart';
 
 class WeatherModel extends Weather {
-  //TODO:(think about date initialization)
   WeatherModel({
-    required super.cityId,
+    required super.city,
     required super.temp,
     required super.tempMin,
     required super.tempMax,
-    required super.mainWeatherId,
+    required super.mainWeather,
   }) : super(
           date: DateFormat('d MMMM y').format(DateTime.now()),
         );
@@ -20,28 +21,27 @@ class WeatherModel extends Weather {
     final main = json['main'] as Map<String, dynamic>;
 
     return WeatherModel(
-      cityId: json['id'] as int,
+      city: CityModel.fromMap(json),
       temp: main['temp'] as double,
       tempMin: main['temp_min'] as double,
       tempMax: main['temp_max'] as double,
-      mainWeatherId: ((json['weather'] as List<dynamic>)[0]
-          as Map<String, dynamic>)['id'] as int,
+      mainWeather: MainWeatherModel.fromMap(json),
     );
   }
 
   WeatherModel copyWith({
-    int? cityId,
+    CityModel? city,
     double? temp,
     double? tempMin,
     double? tempMax,
-    int? mainWeatherId,
+    MainWeatherModel? mainWeather,
     String? date,
   }) =>
       WeatherModel(
-        cityId: cityId ?? this.cityId,
+        city: city ?? this.city,
         temp: temp ?? this.temp,
         tempMin: tempMin ?? this.tempMin,
         tempMax: tempMax ?? this.tempMax,
-        mainWeatherId: mainWeatherId ?? this.mainWeatherId,
+        mainWeather: mainWeather ?? this.mainWeather,
       );
 }

@@ -36,6 +36,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
           kCitiesEndpoint,
           {
             'q': cityName,
+            'units': 'metric',
             'appid': kApiKey,
           },
         ),
@@ -77,6 +78,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
           kWeatherEndpoint,
           {
             'id': cityId.toString(),
+            'units': 'metric',
             'appid': kApiKey,
           },
         ),
@@ -110,6 +112,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
           {
             'lat': coord.lat.toString(),
             'lon': coord.lon.toString(),
+            'units': 'metric',
             'appid': kApiKey,
           },
         ),
