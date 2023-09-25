@@ -12,7 +12,7 @@ class WeatherModel extends Weather {
     required super.tempMax,
     required super.mainWeather,
   }) : super(
-          date: DateFormat('d MMMM y').format(DateTime.now()),
+          date: DateFormat('dd/MM/yyyy').format(DateTime.now()),
         );
 
   const WeatherModel.empty() : super.empty();
