@@ -5,6 +5,7 @@ import 'package:iconly/iconly.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
 import 'package:weather_app_ca/src/weather/domain/entities/city.dart';
 import 'package:weather_app_ca/src/weather/presentation/bloc/weather_bloc.dart';
+import 'package:weather_app_ca/src/weather/presentation/screens/google_map.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({super.key});
@@ -60,6 +61,7 @@ class _SearchBarState extends State<SearchBar> {
                     Row(
                       children: [
                         FloatingActionButton(
+                          heroTag: 'btn1',
                           onPressed: () {
                             context.read<WeatherBloc>().add(
                                   SelectingCityEvent(
@@ -73,16 +75,31 @@ class _SearchBarState extends State<SearchBar> {
                           ),
                         ),
                         FloatingActionButton(
+                          heroTag: 'btn2',
                           onPressed: () {
-                            context.read<WeatherBloc>().add(
-                                  SelectingCityEvent(
-                                    cityName: inputController.text.trim(),
-                                  ),
-                                );
+                            Navigator.of(context).push(
+                              PageRouteBuilder<void>(
+                                pageBuilder: (_, __, ___) => const CustomMap(),
+                                transitionsBuilder: (
+                                  context,
+                                  animation,
+                                  secondaryAnimation,
+                                  child,
+                                ) {
+                                  final tween =
+                                      Tween<double>(begin: 0.5, end: 1);
+                                  final fadeAnimation = animation.drive(tween);
+                                  return FadeTransition(
+                                    opacity: fadeAnimation,
+                                    child: child,
+                                  );
+                                },
+                              ),
+                            );
                           },
                           shape: const CircleBorder(),
                           child: const Icon(
-                            Icons.map_outlined,
+                            Icons.location_pin,
                           ),
                         ),
                       ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
 import 'package:weather_app_ca/src/weather/presentation/bloc/weather_bloc.dart';
 
@@ -16,7 +17,7 @@ class WeatherCard extends StatefulWidget {
 class _WeatherCardState extends State<WeatherCard> {
   @override
   Widget build(BuildContext context) {
-    final cardHeight = context.screenHeight * 0.4;
+    final cardHeight = context.screenHeight * 0.45;
     return SizedBox(
       height: cardHeight,
       child: Card(
@@ -40,15 +41,20 @@ class _WeatherCardState extends State<WeatherCard> {
                   child: Text(state.message),
                 );
               } else if (state is WeatherLoadedState) {
+                var composedName = '${state.weather.city.name}, '
+                    '${state.weather.city.countryCode}';
+                if (composedName.length > 20) {
+                  composedName = composedName.substring(0, 20);
+                }
                 return Column(
                   children: [
                     SizedBox(
                       height: cardHeight * 0.35,
                       child: Row(
                         children: [
-                          const _WeatherIcon(
+                          _WeatherIcon(
                             imageUrl:
-                                'https://openweathermap.org/img/wn/02d.png',
+                                'https://openweathermap.org/img/wn/${state.weather.mainWeather.iconCode}.png',
                           ),
                           const Gap(15),
                           Expanded(
@@ -84,8 +90,7 @@ class _WeatherCardState extends State<WeatherCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '${state.weather.city.name}, '
-                          '${state.weather.city.countryCode}',
+                          composedName,
                           style: context.textTheme.bodyLarge!.copyWith(
                             fontWeight: FontWeight.bold,
                           ),
@@ -163,7 +168,6 @@ class _WeatherCardState extends State<WeatherCard> {
   }
 }
 
-//TODO(add placeholder to icon)
 class _WeatherIcon extends StatelessWidget {
   const _WeatherIcon({
     required this.imageUrl,
@@ -176,9 +180,12 @@ class _WeatherIcon extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Image.network(
-        imageUrl,
-        scale: 0.1,
+      child: FadeInImage.memoryNetwork(
+        placeholder: kTransparentImage,
+        image: imageUrl,
+        fit: BoxFit.contain,
+        width: context.screenHeight * 0.15,
+        height: context.screenHeight * 0.15,
       ),
     );
   }
