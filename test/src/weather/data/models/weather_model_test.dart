@@ -6,11 +6,11 @@ import 'package:weather_app_ca/core/utils/typedefs.dart';
 import 'package:weather_app_ca/src/weather/data/models/weather_model.dart';
 import 'package:weather_app_ca/src/weather/domain/entities/weather.dart';
 
-import '../../../fixtures/fixture_reader.dart';
+import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   final tModel = const WeatherModel.empty().copyWith(
-    date: DateFormat('d MMMM y').format(DateTime.now()),
+    date: DateFormat('dd/MM/yyyy').format(DateTime.now()),
   );
 
   final tJson = fixture('weather_list.json');

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -10,17 +13,20 @@ import 'package:weather_app_ca/src/weather/domain/usecases/get_list_weather.dart
 import 'package:weather_app_ca/src/weather/domain/usecases/get_weather_by_city_id.dart';
 import 'package:weather_app_ca/src/weather/domain/usecases/get_weather_by_coordinates.dart';
 
-import '../../../fixtures/fixture_reader.dart';
+import '../../../../fixtures/fixture_reader.dart';
 
 class MockClient extends Mock implements http.Client {}
 
 void main() {
   late http.Client client;
   late IWeatherRemoteDataSource remoteDataSource;
+  late String tApiKey;
 
   setUp(() {
     client = MockClient();
     remoteDataSource = WeatherRemoteDataSourceImpl(client);
+    dotenv.testLoad(fileInput: File('test/.env').readAsStringSync());
+    tApiKey = dotenv.env['OPEN_WEATHER_API_KEY']!;
   });
 
   group('getListWeather', () {
@@ -33,7 +39,7 @@ void main() {
         Uri.https(kBaseUrl, kCitiesEndpoint, {
           'q': params.cityName,
           'units': 'metric',
-          'appid': kApiKey,
+          'appid': tApiKey,
         }),
       );
     });
@@ -66,7 +72,7 @@ void main() {
             Uri.https(kBaseUrl, kCitiesEndpoint, {
               'q': params.cityName,
               'units': 'metric',
-              'appid': kApiKey,
+              'appid': tApiKey,
             }),
           ),
         ).called(1);
@@ -109,7 +115,7 @@ void main() {
             Uri.https(kBaseUrl, kCitiesEndpoint, {
               'q': params.cityName,
               'units': 'metric',
-              'appid': kApiKey,
+              'appid': tApiKey,
             }),
           ),
         ).called(1);
@@ -143,7 +149,7 @@ void main() {
           Uri.https(kBaseUrl, kCitiesEndpoint, {
             'q': params.cityName,
             'units': 'metric',
-            'appid': kApiKey,
+            'appid': tApiKey,
           }),
         ),
       ).called(1);
@@ -161,7 +167,7 @@ void main() {
         Uri.https(kBaseUrl, kWeatherEndpoint, {
           'id': params.cityId.toString(),
           'units': 'metric',
-          'appid': kApiKey,
+          'appid': tApiKey,
         }),
       );
     });
@@ -192,7 +198,7 @@ void main() {
             Uri.https(kBaseUrl, kWeatherEndpoint, {
               'id': params.cityId.toString(),
               'units': 'metric',
-              'appid': kApiKey,
+              'appid': tApiKey,
             }),
           ),
         ).called(1);
@@ -233,7 +239,7 @@ void main() {
             Uri.https(kBaseUrl, kWeatherEndpoint, {
               'id': params.cityId.toString(),
               'units': 'metric',
-              'appid': kApiKey,
+              'appid': tApiKey,
             }),
           ),
         ).called(1);
@@ -253,7 +259,7 @@ void main() {
           'lat': params.coord.lat.toString(),
           'lon': params.coord.lon.toString(),
           'units': 'metric',
-          'appid': kApiKey,
+          'appid': tApiKey,
         }),
       );
     });
@@ -285,7 +291,7 @@ void main() {
               'lat': params.coord.lat.toString(),
               'lon': params.coord.lon.toString(),
               'units': 'metric',
-              'appid': kApiKey,
+              'appid': tApiKey,
             }),
           ),
         ).called(1);
@@ -330,7 +336,7 @@ void main() {
               'lat': params.coord.lat.toString(),
               'lon': params.coord.lon.toString(),
               'units': 'metric',
-              'appid': kApiKey,
+              'appid': tApiKey,
             }),
           ),
         ).called(1);

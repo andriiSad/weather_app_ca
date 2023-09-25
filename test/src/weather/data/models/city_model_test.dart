@@ -5,7 +5,7 @@ import 'package:weather_app_ca/core/utils/typedefs.dart';
 import 'package:weather_app_ca/src/weather/data/models/city_model.dart';
 import 'package:weather_app_ca/src/weather/domain/entities/city.dart';
 
-import '../../../fixtures/fixture_reader.dart';
+import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
   const tModel = CityModel.empty();
