@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:provider/provider.dart';
 import 'package:weather_app_ca/core/common/providers/location_provider.dart';
 import 'package:weather_app_ca/core/common/providers/theme_provider.dart';
@@ -15,7 +15,7 @@ import 'package:weather_app_ca/src/weather/presentation/screens/home/home_screen
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load();
+  await FlutterConfig.loadEnvVariables();
 
   Bloc.observer = const AppBlocObserver();
 
