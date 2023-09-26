@@ -46,6 +46,10 @@ class CityCard extends StatelessWidget {
                 ),
                 child: TextButton(
                   onPressed: () {
+                    //TODO(when user choose popular city, we cant get coordinates)
+                    //configure and use City model instead of Popularcity
+                    // context.locationProvider.coordinates = city.coord;
+
                     context
                         .read<WeatherBloc>()
                         .add(SelectedPopularCityEvent(cityId: city.id));
