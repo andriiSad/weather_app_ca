@@ -21,9 +21,9 @@ class PopularCititesWidget extends StatelessWidget {
       backgroundImageName: 'new_york.png',
     ),
     PopularCity(
-      id: 292223,
-      cityName: 'Dubai',
-      backgroundImageName: 'dubai.png',
+      id: 2643743,
+      cityName: 'London',
+      backgroundImageName: 'london.png',
     ),
     PopularCity(
       id: 2968815,
