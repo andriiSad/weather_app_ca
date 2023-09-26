@@ -8,7 +8,7 @@ class LocationProvider extends ChangeNotifier {
 
   set coordinates(Coordinates? coordinates) {
     if (_coordinates != coordinates) _coordinates = coordinates;
-    notifyListeners();
+    Future.delayed(Duration.zero, notifyListeners);
   }
 
   void initLocation(Coordinates? coordinates) {
