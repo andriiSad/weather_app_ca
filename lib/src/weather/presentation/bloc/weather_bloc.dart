@@ -23,6 +23,7 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     on<SelectedCityEvent>(_selectedCityEventHandler);
     on<SelectedPopularCityEvent>(_selectedPopularCityEventHandler);
     on<SelectedCityByCoordinatesEvent>(_selectedCityByCoordinatesEventHandler);
+    on<LoadingEvent>(_loadingEventHandler);
   }
   final GetListWeather _getListWeather;
   final GetWeatherByCityId _getWeatherByCityId;
@@ -114,5 +115,12 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
         ),
       ),
     );
+  }
+
+  Future<void> _loadingEventHandler(
+    LoadingEvent _,
+    Emitter<WeatherState> emit,
+  ) async {
+    emit(const WeatherLoadingState());
   }
 }

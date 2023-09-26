@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:weather_app_ca/core/common/providers/theme_provider.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
 import 'package:weather_app_ca/core/models/coordinates.dart';
+import 'package:weather_app_ca/core/utils/constants.dart';
 import 'package:weather_app_ca/src/weather/presentation/bloc/weather_bloc.dart';
 import 'package:weather_app_ca/src/weather/presentation/screens/home/widgets/footer.dart';
 import 'package:weather_app_ca/src/weather/presentation/screens/home/widgets/popular_cities.dart';
@@ -128,6 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _setCurrentWeather() async {
+    context.read<WeatherBloc>().add(
+          const LoadingEvent(),
+        );
     try {
       final determinePosition = await _determinePosition();
 
@@ -150,10 +154,13 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     } catch (e) {
       if (context.mounted) {
-        _showLocationDisabledSnackBar(e.toString());
-        context
-            .read<WeatherBloc>()
-            .add(const SelectedPopularCityEvent(cityId: 2968815));
+        _showLocationDisabledSnackBar(
+          'Location disabled, showing default weather',
+        );
+
+        context.read<WeatherBloc>().add(
+              const SelectedCityByCoordinatesEvent(coord: kDefaultCoordinates),
+            );
       }
     }
   }

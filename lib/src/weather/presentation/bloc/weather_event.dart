@@ -43,3 +43,7 @@ final class SelectedPopularCityEvent extends WeatherEvent {
 
   final int cityId;
 }
+
+final class LoadingEvent extends WeatherEvent {
+  const LoadingEvent();
+}
