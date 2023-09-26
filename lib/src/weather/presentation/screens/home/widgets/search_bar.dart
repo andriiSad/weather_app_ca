@@ -119,13 +119,18 @@ class _SearchBarState extends State<SearchBar> {
             else if (state is CitySelectingErrorState)
               SizedBox(
                 width: double.infinity,
-                height: context.screenHeight * 0.1,
+                height: context.screenHeight * 0.15,
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Align(
-                    child: Text(state.message),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        state.message,
+                      ),
+                    ),
                   ),
                 ),
               )
