@@ -104,10 +104,13 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     final result = await _getWeatherByCoordinates(
       GetWeatherByCoordinatesParams(coord: event.coord),
     );
+
     result.fold(
-      (failure) => WeatherErrorState(
-        statusCode: failure.statusCode,
-        message: failure.message,
+      (failure) => emit(
+        WeatherErrorState(
+          statusCode: failure.statusCode,
+          message: failure.message,
+        ),
       ),
       (weather) => emit(
         WeatherLoadedState(
