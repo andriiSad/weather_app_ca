@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
+import 'package:weather_app_ca/core/utils/constants.dart';
 import 'package:weather_app_ca/src/weather/presentation/bloc/weather_bloc.dart';
 
 class WeatherCard extends StatefulWidget {
@@ -27,7 +28,24 @@ class _WeatherCardState extends State<WeatherCard> {
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: BlocBuilder<WeatherBloc, WeatherState>(
+          child: BlocConsumer<WeatherBloc, WeatherState>(
+            listener: (context, state) {
+              if (state is WeatherErrorState) {
+                //TODO(extract snackBar showing into global,
+                // and show instead of this)
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.message),
+                  ),
+                );
+
+                context.read<WeatherBloc>().add(
+                      const SelectedCityByCoordinatesEvent(
+                        coord: kDefaultCoordinates,
+                      ),
+                    );
+              }
+            },
             buildWhen: (previous, current) =>
                 current is! CitySelectingState &&
                 current is! CitySelectingErrorState,
@@ -37,6 +55,12 @@ class _WeatherCardState extends State<WeatherCard> {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is WeatherErrorState) {
+                return Center(
+                  child: Text(state.message),
+                );
+              } else if (state is WeatherErrorState) {
+                //change builder to consumer
+                //and if error occures, show banner, and then default weather
                 return Center(
                   child: Text(state.message),
                 );
