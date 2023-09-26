@@ -17,7 +17,7 @@ class WeatherCard extends StatefulWidget {
 class _WeatherCardState extends State<WeatherCard> {
   @override
   Widget build(BuildContext context) {
-    final cardHeight = context.screenHeight * 0.45;
+    final cardHeight = context.screenHeight * 0.55;
     return SizedBox(
       height: cardHeight,
       child: Card(
