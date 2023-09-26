@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:search_map_place_updated/search_map_place_updated.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
@@ -152,7 +152,7 @@ class _CustomMapSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SearchMapPlaceWidget(
-      apiKey: dotenv.env['GOOGLE_MAPS_API_KEY']!,
+      apiKey: FlutterConfig.get('GOOGLE_MAPS_API_KEY') as String,
       bgColor: Colors.white,
       textColor: Colors.black,
       iconColor: Colors.black,
