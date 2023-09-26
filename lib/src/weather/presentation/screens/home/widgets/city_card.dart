@@ -30,22 +30,37 @@ class CityCard extends StatelessWidget {
             fit: BoxFit.fitWidth,
           ),
         ),
-        child: Align(
-          alignment: Alignment.bottomCenter,
-          child: TextButton(
-            onPressed: () {
-              context
-                  .read<WeatherBloc>()
-                  .add(SelectedPopularCityEvent(cityId: city.id));
-              pageController.animateToPage(
-                0,
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-              );
-            },
-            child: Text(
-              city.cityName,
-              style: context.textTheme.titleLarge,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: 10,
+            horizontal: 20,
+          ),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: SizedBox(
+              width: double.infinity,
+              child: Card(
+                color: Colors.white.withOpacity(0.7),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    context
+                        .read<WeatherBloc>()
+                        .add(SelectedPopularCityEvent(cityId: city.id));
+                    pageController.animateToPage(
+                      0,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  child: Text(
+                    city.cityName,
+                    style: context.textTheme.titleLarge,
+                  ),
+                ),
+              ),
             ),
           ),
         ),

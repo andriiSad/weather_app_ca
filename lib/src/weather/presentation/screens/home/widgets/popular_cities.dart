@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app_ca/core/common/providers/theme_provider.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
 import 'package:weather_app_ca/core/models/popular_city.dart';
 import 'package:weather_app_ca/core/res/strings.dart';
@@ -35,11 +37,19 @@ class PopularCititesWidget extends StatelessWidget {
     return Column(
       children: [
         Gap(context.screenHeight * 0.02),
-        Text(
-          popularCitiesSectionName,
-          textAlign: TextAlign.center,
-          style: context.textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.bold,
+        Consumer<ThemeProvider>(
+          builder: (
+            _,
+            themeProvider,
+            __,
+          ) =>
+              Text(
+            popularCitiesSectionName,
+            textAlign: TextAlign.center,
+            style: context.textTheme.titleLarge!.copyWith(
+              fontWeight: FontWeight.bold,
+              color: themeProvider.isDarkMode ? Colors.white : Colors.black,
+            ),
           ),
         ),
         Gap(context.screenHeight * 0.05),

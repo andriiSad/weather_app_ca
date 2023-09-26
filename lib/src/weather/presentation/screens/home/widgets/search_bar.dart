@@ -3,9 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
+import 'package:weather_app_ca/core/models/coordinates.dart';
 import 'package:weather_app_ca/src/weather/domain/entities/city.dart';
 import 'package:weather_app_ca/src/weather/presentation/bloc/weather_bloc.dart';
-import 'package:weather_app_ca/src/weather/presentation/screens/google_map.dart';
+import 'package:weather_app_ca/src/weather/presentation/screens/custom_map_screen.dart';
 
 class SearchBar extends StatefulWidget {
   const SearchBar({super.key});
@@ -61,7 +62,7 @@ class _SearchBarState extends State<SearchBar> {
                     Row(
                       children: [
                         FloatingActionButton(
-                          heroTag: 'btn1',
+                          heroTag: '_search_icon_',
                           onPressed: () {
                             context.read<WeatherBloc>().add(
                                   SelectingCityEvent(
@@ -75,11 +76,12 @@ class _SearchBarState extends State<SearchBar> {
                           ),
                         ),
                         FloatingActionButton(
-                          heroTag: 'btn2',
+                          heroTag: '_map_icon_',
                           onPressed: () {
                             Navigator.of(context).push(
                               PageRouteBuilder<void>(
-                                pageBuilder: (_, __, ___) => const CustomMap(),
+                                pageBuilder: (_, __, ___) =>
+                                    const CustomMapScreen(),
                                 transitionsBuilder: (
                                   context,
                                   animation,
@@ -115,7 +117,18 @@ class _SearchBarState extends State<SearchBar> {
                 inputController: inputController,
               )
             else if (state is CitySelectingErrorState)
-              Text(state.message)
+              SizedBox(
+                width: double.infinity,
+                height: context.screenHeight * 0.1,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Align(
+                    child: Text(state.message),
+                  ),
+                ),
+              )
             else
               Container(),
           ],
@@ -152,6 +165,11 @@ class _SearchBarDropDown extends StatelessWidget {
                   width: double.infinity,
                   child: TextButton(
                     onPressed: () {
+                      context.locationProvider.coordinates = Coordinates(
+                        lat: city.coord.lat,
+                        lon: city.coord.lon,
+                      );
+
                       context.read<WeatherBloc>().add(
                             SelectedCityEvent(cityId: city.id),
                           );

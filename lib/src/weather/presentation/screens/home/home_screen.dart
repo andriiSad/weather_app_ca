@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:provider/provider.dart';
+import 'package:weather_app_ca/core/common/providers/theme_provider.dart';
 import 'package:weather_app_ca/core/extensions/context_extension.dart';
 import 'package:weather_app_ca/core/models/coordinates.dart';
 import 'package:weather_app_ca/src/weather/presentation/bloc/weather_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:weather_app_ca/src/weather/presentation/screens/home/widgets/pop
 import 'package:weather_app_ca/src/weather/presentation/screens/home/widgets/search_bar.dart'
     as widgets;
 import 'package:weather_app_ca/src/weather/presentation/screens/home/widgets/weather_card.dart';
+import 'package:yako_theme_switch/yako_theme_switch.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,69 +37,92 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final pages = <Widget>[
-      Container(
-        height: context.screenHeight,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/bg_day.png'),
-            fit: BoxFit.cover,
+      Consumer<ThemeProvider>(
+        builder: (_, themeProvider, __) => Container(
+          height: context.screenHeight,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: themeProvider.themeMode == ThemeMode.dark
+                  ? const AssetImage('assets/images/bg_night.png')
+                  : const AssetImage('assets/images/bg_day.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            //TODO(fix scroll)
-            child: SingleChildScrollView(
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              child: Column(
-                children: [
-                  Gap(context.screenHeight * 0.1),
-                  Stack(
-                    children: [
-                      Padding(
-                        padding:
-                            EdgeInsets.only(top: context.screenHeight * 0.2),
-                        child: const WeatherCard(),
-                      ),
-                      const Positioned(
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        child: widgets.SearchBar(),
-                      ),
-                    ],
-                  ),
-                  Gap(context.screenHeight * 0.2),
-                ],
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: SizedBox(
+                height: context.screenHeight,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Gap(context.screenHeight * 0.02),
+                    YakoThemeSwitch(
+                      enabled: !themeProvider.isDarkMode,
+                      onChanged: ({bool? changed}) {
+                        context.themeProvider.toggleThemeMode();
+                      },
+                      width: 50,
+                      enabledBackgroundColor: Colors.blue,
+                      disabledBackgroundColor: Colors.blueGrey,
+                      enabledToggleColor: Colors.yellow,
+                      disabledToggleColor: Colors.white,
+                      animationDuration: const Duration(milliseconds: 300),
+                    ),
+                    Gap(context.screenHeight * 0.02),
+                    Stack(
+                      children: [
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: context.screenHeight * 0.2),
+                          child: const WeatherCard(),
+                        ),
+                        const Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          child: widgets.SearchBar(),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-      Container(
-        height: context.screenHeight,
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SafeArea(
-              child: PopularCititesWidget(pageController: pageController),
-            ),
-            const Footer(),
-          ],
+      Consumer<ThemeProvider>(
+        builder: (_, themeProvider, __) => Container(
+          height: context.screenHeight,
+          color: themeProvider.isDarkMode ? Colors.black : Colors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SafeArea(
+                child: PopularCititesWidget(pageController: pageController),
+              ),
+              const Footer(),
+            ],
+          ),
         ),
       ),
     ];
 
     return Scaffold(
-      body: PageView.builder(
-        itemCount: pages.length,
-        controller: pageController,
-        scrollDirection: Axis.vertical,
-        physics: const ClampingScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return pages[index];
-        },
+      body: SingleChildScrollView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: context.screenHeight),
+          child: PageView.builder(
+            itemCount: pages.length,
+            controller: pageController,
+            scrollDirection: Axis.vertical,
+            itemBuilder: (BuildContext context, int index) {
+              return pages[index];
+            },
+          ),
+        ),
       ),
     );
   }
@@ -107,6 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
       final determinePosition = await _determinePosition();
 
       if (context.mounted) {
+        context.locationProvider.coordinates = Coordinates(
+          lat: determinePosition.latitude,
+          lon: determinePosition.longitude,
+        );
+
         context.read<WeatherBloc>().add(
               SelectedCityByCoordinatesEvent(
                 coord: Coordinates(
