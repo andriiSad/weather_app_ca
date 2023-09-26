@@ -132,9 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
       final determinePosition = await _determinePosition();
 
       if (context.mounted) {
-        context.locationProvider.coordinates = Coordinates(
-          lat: determinePosition.latitude,
-          lon: determinePosition.longitude,
+        context.locationProvider.initLocation(
+          Coordinates(
+            lat: determinePosition.latitude,
+            lon: determinePosition.longitude,
+          ),
         );
 
         context.read<WeatherBloc>().add(
