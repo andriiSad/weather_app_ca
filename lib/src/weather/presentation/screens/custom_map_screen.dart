@@ -39,8 +39,8 @@ class _CustomMapScreenState extends State<CustomMapScreen> {
   void _init() {
     _googleMapController = Completer();
     _userPosition = LatLng(
-      context.locationProvider.coordinates?.lat ?? 50.450001,
-      context.locationProvider.coordinates?.lon ?? 30.524444,
+      context.locationProvider.coordinates.lat,
+      context.locationProvider.coordinates.lon,
     );
     _cameraPosition = CameraPosition(
       target: _userPosition,
