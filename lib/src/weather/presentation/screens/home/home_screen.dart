@@ -118,6 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: PageView.builder(
             itemCount: pages.length,
             controller: pageController,
+            physics: const ClampingScrollPhysics(),
             scrollDirection: Axis.vertical,
             itemBuilder: (BuildContext context, int index) {
               return pages[index];

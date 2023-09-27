@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:weather_app_ca/core/errors/exceptions.dart';
 import 'package:weather_app_ca/core/models/coordinates.dart';
@@ -38,7 +38,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
           {
             'q': cityName,
             'units': 'metric',
-            'appid': FlutterConfig.get('OPEN_WEATHER_API_KEY') as String,
+            'appid': dotenv.env['OPEN_WEATHER_API_KEY'],
           },
         ),
       );
@@ -80,7 +80,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
           {
             'id': cityId.toString(),
             'units': 'metric',
-            'appid': FlutterConfig.get('OPEN_WEATHER_API_KEY') as String,
+            'appid': dotenv.env['OPEN_WEATHER_API_KEY'],
           },
         ),
       );
@@ -114,7 +114,7 @@ class WeatherRemoteDataSourceImpl implements IWeatherRemoteDataSource {
             'lat': coord.lat.toString(),
             'lon': coord.lon.toString(),
             'units': 'metric',
-            'appid': FlutterConfig.get('OPEN_WEATHER_API_KEY') as String,
+            'appid': dotenv.env['OPEN_WEATHER_API_KEY'],
           },
         ),
       );
